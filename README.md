@@ -105,3 +105,44 @@ Acessar a AWS na pagina do serviço EC2, e clicar em "Segurança" > "Grupos de s
 - Confirme se o sistema de arquivos EFS está montado corretamente usando o comando `df -h`.
 
 **Referência**: [Documentação do Amazon EFS](https://docs.aws.amazon.com/pt_br/efs/latest/ug/whatisefs.html) 
+
+## Configurar o Apache.
+
+- Executar o comando `sudo yum update -y` para atualizar o sistema.
+- Executar o comando `sudo yum install httpd -y` para instalar o apache.
+- Executar o comando `sudo systemctl start httpd` para iniciar o apache.
+- Executar o comando `sudo systemctl enable httpd` para habilitar o apache para iniciar automaticamente.
+- Executar o comando `sudo systemctl status httpd` para verificar o status do apache.
+- Configurações adicionais do apache podem ser feitas no arquivo `/etc/httpd/conf/httpd.conf`.
+- Parar o apache, executar o comando `sudo systemctl stop httpd`.
+
+### Exemplo de user data para instalação do apache na criação da ec2.
+<details>
+<summary>Script Apache.</summary>
+
+```bash
+
+#!/bin/bash
+
+sudo yum update -y
+
+sudo yum install httpd -y
+
+sudo systemctl start httpd
+
+sudo systemctl enable httpd
+
+sudo chown -R apache:apache /var/www/html
+sudo chmod -R 755 /var/www/html
+
+# Criar um arquivo index.html de exemplo (opcional)
+echo "<html><body><h1>Meu Site Apache</h1></body></html>" | sudo tee /var/www/html/index.html
+
+sudo systemctl restart httpd
+
+sudo systemctl status httpd
+``` 
+
+</details>
+
+___
