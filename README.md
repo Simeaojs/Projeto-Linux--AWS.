@@ -32,3 +32,20 @@ _ _ _
     - Execução automatizada do script a cada 5 minutos.
 
 ---
+
+## Guia Detalhado para Configuração.
+
+### Geração de chave pública de acesso e anexá-la à uma nova instância EC2 na AWS.
+- Acessar a AWS na pagina do serviço EC2, e clicar em "Pares de chaves" no menu lateral esquerdo.
+- Clicar em "Criar par de chaves".
+- Inserir um nome para a chave e clicar em "Criar par de chaves".
+- Salvar o arquivo .pem gerado em um local seguro.
+- Clicar em "Instâncias" no menu lateral esquerdo.
+- Clicar em "Executar instâncias".
+- Configurar as Tags da instância (Name, Project e CostCenter) para instâncias e volumes.
+- Selecionar a imagem Amazon Linux 2 AMI (HVM), SSD Volume Type.
+- Selecionar o tipo de instância t3.small.
+- Selecionar a chave gerada anteriormente.
+- Colocar 16 GB de armazenamento gp2 (SSD).
+- Clicar em "Executar instância".
+
