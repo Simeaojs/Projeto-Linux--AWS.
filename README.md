@@ -72,3 +72,36 @@ Acessar a AWS na pagina do serviço EC2, e clicar em "Segurança" > "Grupos de s
     TCP personalizado | TCP | 2049 | 0.0.0.0/0 | NFS
     UDP personalizado | UDP | 2049 | 0.0.0.0/0 | NFS
 
+ ## Configurando o Sistema de Arquivos AWS EFS na Instância EC2.
+
+- Acesse o Console da AWS.
+- Navegue até o Serviço EFS.
+- Crie um Sistema de Arquivos EFS.
+- Configure as Opções:
+  - Escolha a VPC (deve ser a mesma VPC da Instância EC2).
+- Defina as opções de segurança de acesso, liberando a porta 2049/TCP
+- Crie o Ponto de Montagem na Instância EC2:
+  - Vá para a instância EC2.
+  - Instale o pacote ` sudo yum install -y amazon-efs-utils ` para suporte NFS.
+  - Crie um diretório local que servirá como ponto de montagem.
+- Obtenha as Informações de Montagem do EFS:
+  - Volte ao console do EFS e obtenha as informações de DNS do ponto de montagem.
+- Monte o Sistema de Arquivos na Instância EC2:
+  - Execute o comando de montagem na instância EC2 usando o cliente do NFS:
+
+  
+   ``` sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 <DNS do EFS>:/ /<caminho local> ```
+
+- Configure a Montagem Automática:
+  - Abra o arquivo `/etc/fstab` em um editor.
+  - Para montar automaticamente um sistema de arquivos usando o NFS em vez do auxiliar de montagem do EFS, adicione a seguinte linha ao `/etc/fstab` arquivo.
+
+   ```file_system_id.efs.aws-region.amazonaws.com:/ mount_point nfs4 nfsvers=4.1,rsize=1048576wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0 ``` 
+
+- Substitua `file_system_id` pelo ID do sistema de arquivos que você está montando.
+  - Substitua `aws-region` Região da AWS pela que está no sistema de arquivos, como. us-east-1
+  - Substitua `mount_point` pelo ponto de montagem do sistema de arquivos.
+
+- Confirme se o sistema de arquivos EFS está montado corretamente usando o comando `df -h`.
+
+**Referência**: [Documentação do Amazon EFS](https://docs.aws.amazon.com/pt_br/efs/latest/ug/whatisefs.html) 
