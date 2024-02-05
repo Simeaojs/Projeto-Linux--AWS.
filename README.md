@@ -56,3 +56,19 @@ _ _ _
 - Selecionar o ip alocado e clicar em "Ações" > "Associar endereço IP elástico".
 - Selecionar a instância EC2 criada anteriormente e clicar em "Associar".
 
+## Configurando regras de segurança.
+Acessar a AWS na pagina do serviço EC2, e clicar em "Segurança" > "Grupos de segurança" no menu lateral esquerdo.
+- Selecionar o grupo de segurança da instância EC2 criada anteriormente.
+- Clicar em "Editar regras de entrada".
+- Configurar as seguintes regras:
+
+    Tipo | Protocolo | Intervalo de portas | Origem | Descrição
+    ---|---|---|---|---
+    SSH | TCP | 22 | MEU IP | SSH
+    TCP personalizado | TCP | 80 | 0.0.0.0/0 | HTTP
+    TCP personalizado | TCP | 443 | 0.0.0.0/0 | HTTPS
+    TCP personalizado | TCP | 111 | 0.0.0.0/0 | RPC
+    UDP personalizado | UDP | 111 | 0.0.0.0/0 | RPC
+    TCP personalizado | TCP | 2049 | 0.0.0.0/0 | NFS
+    UDP personalizado | UDP | 2049 | 0.0.0.0/0 | NFS
+
