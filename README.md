@@ -146,3 +146,43 @@ sudo systemctl status httpd
 </details>
 
 ___
+
+## Configurar o script de validação.
+
+- Abra um editor de texto no seu servidor e crie um script Bash usando o comando `nano check_service.sh`.
+- Adicione o seguinte conteúdo ao script. 
+```bash
+#!/bin/bash
+# Script que verifica o status do serviço httpd e salva o resultado em um arquivo no diretório no qual foi criado com seu nome.
+
+
+SERVICE_NAME="httpd"  
+EFS_MOUNT_PATH="example/etc"  
+
+# Obter a data e a hora atual
+CURRENT_DATE=$(date "+%Y-%m-%d")
+CURRENT_TIME=$(date "+%H:%M:%S")
+
+# Verifica se o serviço está em execução
+if systemctl is-active --quiet $SERVICE_NAME; then
+    STATUS="ONLINE"
+    MESSAGE="O serviço $SERVICE_NAME está online."
+else
+    STATUS="OFFLINE"
+    MESSAGE="O serviço $SERVICE_NAME esta offline."
+fi
+
+# Construir a string completa com data, hora, nome do serviço, status e mensagem
+RESULT_STRING="$CURRENT_DATE $CURRENT_TIME"
+RESULT_STRING+="\nServiço: $SERVICE_NAME"
+RESULT_STRING+="\nStatus: $STATUS"
+RESULT_STRING+="\nMensagem: $MESSAGE"
+
+
+echo -e "$RESULT_STRING\n" >> "$EFS_MOUNT_PATH/status.txt" 
+
+``` 
+
+- Salve o arquivo de script.
+- Execute o comando `chmod +x script.sh` para tornar o arquivo de script executável.
+- Execute o comando `./script.sh` para executar o script.
