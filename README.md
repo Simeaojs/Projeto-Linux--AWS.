@@ -186,3 +186,23 @@ echo -e "$RESULT_STRING\n" >> "$EFS_MOUNT_PATH/status.txt"
 - Salve o arquivo de script.
 - Execute o comando `chmod +x script.sh` para tornar o arquivo de script executável.
 - Execute o comando `./script.sh` para executar o script.
+
+## Agendamento de Execução automatizada do Script a cada 5 minutos.
+
+- Execute o comando `crontab -e` para editar o cronjob.
+- Adicione a seguinte linha de código no arquivo de cronjob:
+
+``` */5 * * * * /caminho/do/script/check_service.sh ``` 
+
+- Salve o arquivo de cronjob.
+
+_ _ _ 
+
+## 🌱Contribuição
+
+Contribuições são bem-vindas! Se você identificar problemas ou melhorias, sinta-se à vontade para abrir um pull request.
+
+<p align="center">
+  <img src="https://s3.amazonaws.com/imagemcompas.oul/compass.png" alt="">
+</p>
+
