@@ -49,3 +49,10 @@ _ _ _
 - Colocar 16 GB de armazenamento gp2 (SSD).
 - Clicar em "Executar instância".
 
+## Alocar um endereço IP elástico à instância EC2.
+
+- Acessar a AWS na pagina do serviço EC2, e clicar em "IPs elásticos" no menu lateral esquerdo.
+- Clicar em "Alocar endereço IP elástico".
+- Selecionar o ip alocado e clicar em "Ações" > "Associar endereço IP elástico".
+- Selecionar a instância EC2 criada anteriormente e clicar em "Associar".
+
