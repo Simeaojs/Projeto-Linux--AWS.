@@ -49,12 +49,15 @@ _ _ _
 - Colocar 16 GB de armazenamento gp2 (SSD).
 - Clicar em "Executar instância".
 
+**Referência**: [Documentação Amazon ec2](https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/EC2_GetStarted.html) 
+
 ## Alocar um endereço IP elástico à instância EC2.
 
 - Acessar a AWS na pagina do serviço EC2, e clicar em "IPs elásticos" no menu lateral esquerdo.
 - Clicar em "Alocar endereço IP elástico".
 - Selecionar o ip alocado e clicar em "Ações" > "Associar endereço IP elástico".
 - Selecionar a instância EC2 criada anteriormente e clicar em "Associar".
+
 
 ## Configurando regras de segurança.
 Acessar a AWS na pagina do serviço EC2, e clicar em "Segurança" > "Grupos de segurança" no menu lateral esquerdo.
@@ -71,6 +74,7 @@ Acessar a AWS na pagina do serviço EC2, e clicar em "Segurança" > "Grupos de s
     UDP personalizado | UDP | 111 | 0.0.0.0/0 | RPC
     TCP personalizado | TCP | 2049 | 0.0.0.0/0 | NFS
     UDP personalizado | UDP | 2049 | 0.0.0.0/0 | NFS
+
 
  ## Configurando o Sistema de Arquivos AWS EFS na Instância EC2.
 
@@ -156,36 +160,36 @@ ___
 # Script que verifica o status do serviço httpd e salva o resultado em um arquivo no diretório no qual foi criado com seu nome.
 
 
-SERVICE_NAME="httpd"  
-EFS_MOUNT_PATH="example/etc"  
+#!/bin/bash
 
-# Obter a data e a hora atual
+SERVICE_NAME="httpd"
+EFS_MOUNT_PATH="example/etc"
+
 CURRENT_DATE=$(date "+%Y-%m-%d")
 CURRENT_TIME=$(date "+%H:%M:%S")
 
-# Verifica se o serviço está em execução
 if systemctl is-active --quiet $SERVICE_NAME; then
     STATUS="ONLINE"
     MESSAGE="O serviço $SERVICE_NAME está online."
+    OUTPUT_FILE="$EFS_MOUNT_PATH/status_online.txt"
 else
     STATUS="OFFLINE"
-    MESSAGE="O serviço $SERVICE_NAME esta offline."
+    MESSAGE="O serviço $SERVICE_NAME está offline."
+    OUTPUT_FILE="$EFS_MOUNT_PATH/status_offline.txt"
 fi
 
-# Construir a string completa com data, hora, nome do serviço, status e mensagem
 RESULT_STRING="$CURRENT_DATE $CURRENT_TIME"
 RESULT_STRING+="\nServiço: $SERVICE_NAME"
 RESULT_STRING+="\nStatus: $STATUS"
 RESULT_STRING+="\nMensagem: $MESSAGE"
 
-
-echo -e "$RESULT_STRING\n" >> "$EFS_MOUNT_PATH/status.txt" 
+echo -e "$RESULT_STRING\n" >> "$OUTPUT_FILE"
 
 ``` 
 
 - Salve o arquivo de script.
-- Execute o comando `chmod +x script.sh` para tornar o arquivo de script executável.
-- Execute o comando `./script.sh` para executar o script.
+- Execute o comando `chmod +x nome_do_script` para tornar o arquivo de script executável.
+- Execute o comando `./nome_do_script` para executar o script.
 
 ## Agendamento de Execução automatizada do Script a cada 5 minutos.
 
