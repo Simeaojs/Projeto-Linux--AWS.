@@ -1,26 +1,29 @@
 #!/bin/bash
 
-SERVICE_NAME="httpd"  
-EFS_MOUNT_PATH="example/nfs"  
+# Definição do nome do serviço e do diretório de montagem do EFS
+SERVICE_NAME="httpd"
+EFS_MOUNT_PATH="example/etc"
 
-# Obter a data e a hora atual
+# Obtenção da data e hora atuais
 CURRENT_DATE=$(date "+%Y-%m-%d")
 CURRENT_TIME=$(date "+%H:%M:%S")
 
-# Verifica se o serviço está em execução
+# Verificação do status do serviço
 if systemctl is-active --quiet $SERVICE_NAME; then
     STATUS="ONLINE"
     MESSAGE="O serviço $SERVICE_NAME está online."
+    OUTPUT_FILE="$EFS_MOUNT_PATH/status_online.txt"
 else
     STATUS="OFFLINE"
-    MESSAGE="O serviço $SERVICE_NAME esta offline."
+    MESSAGE="O serviço $SERVICE_NAME está offline."
+    OUTPUT_FILE="$EFS_MOUNT_PATH/status_offline.txt"
 fi
 
-# Construir a string completa com data, hora, nome do serviço, status e mensagem
+# Construção da string completa com data, hora, nome do serviço, status e mensagem
 RESULT_STRING="$CURRENT_DATE $CURRENT_TIME"
 RESULT_STRING+="\nServiço: $SERVICE_NAME"
 RESULT_STRING+="\nStatus: $STATUS"
 RESULT_STRING+="\nMensagem: $MESSAGE"
 
-
-echo -e "$RESULT_STRING\n" >> "$EFS_MOUNT_PATH/status.txt"
+# Escrita da string no arquivo correspondente
+echo -e "$RESULT_STRING\n" >> "$OUTPUT_FILE"
