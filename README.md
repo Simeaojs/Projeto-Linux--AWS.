@@ -156,9 +156,6 @@ ___
 - Abra um editor de texto no seu servidor e crie um script Bash usando o comando `nano check_service.sh`.
 - Adicione o seguinte conteúdo ao script. 
 ```bash
-#!/bin/bash
-# Script que verifica o status do serviço httpd e salva o resultado em um arquivo no diretório no qual foi criado com seu nome.
-
 
 #!/bin/bash
 
